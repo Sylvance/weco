@@ -1,0 +1,52 @@
+const template = document.createElement('template');
+template.innerHTML = `
+    <style>
+        /* Uncomment and provide a URL if you want to import an external stylesheet */
+        /* @import url(); */
+
+        :host {
+            /* for the shadow root */
+            display: block;
+        }
+
+        :host(<%= tag[1] %>-tag) {
+            /* if my shadow root is <%= tag[1] %>-tag */
+        }
+
+        :host-context(main) {
+            /* if one of my ancestors is main */
+        }
+
+        ::slotted(*) {
+            /* anything that is slotted */
+        }
+
+        .<%= tag[1] %>-tag {}
+    </style>
+
+    <<%= html_tag %> class="<%= tag[1] %>-tag" part="<%= tag[1] %>-tag"></<%= html_tag %>>
+`;
+
+class <%= class_name %> extends HTMLElement {
+    constructor() {
+        super();
+
+        this.root = this.attachShadow({ mode: 'closed' });
+        this.root.innerHTML = template.innerHTML;
+    }
+
+    // Define allowed attributes
+    static get observedAttributes() {
+        return [];
+    }
+
+    // Handle values and changes to the attributes
+    attributeChangedCallback(attrName, _oldVal, newVal) {
+        // Handle attribute changes here if needed
+    }
+}
+
+customElements.define('<%= tag[1] %>-tag', <%= class_name %>);
+
+// <<%= tag[1] %>-tag id='some id'>
+// </<%= tag[1] %>-tag>
